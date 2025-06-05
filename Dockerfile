@@ -1,8 +1,10 @@
 FROM nginx:latest
 
-ENV BACKEND_ADDR teamspeak.bootkitism.svc
-ENV BACKEND_PORT 10101
+COPY ./nginx.conf /etc/nginx/nginx.conf.template
+COPY ./docker-entrypoint.sh /docker-entrypoint.sh
 
-COPY ./nginx.conf /etc/nginx/nginx.conf
+RUN chmod +x /docker-entrypoint.sh
+
+CMD ["/docker-entrypoint.sh"]
 
 CMD ["nginx", "-g", "daemon off;"]
